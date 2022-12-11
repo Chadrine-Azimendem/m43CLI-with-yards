@@ -1,25 +1,40 @@
+const Movie = require("./utils/index");
 const yargs = require("yargs");
-// console.log(yargs.argv);
-// log the value of the object element with key firstfield and secondtfield to the console
-// console.log(yargs.argv.firstfield);
-// console.log(yargs.argv.secondfield);
 
-// we can set  yargs.argv as a variable to make code more readable.
-const imput = yargs.argv;
-
-if (imput.actor) {
-  console.log(`Its's ${imput.actor}`);
-}
-
-// const yargs = require("yargs");
-// const { Movie } = require("./utils");
-// console.log(yargs.argv);
-// console.log(yargs.argv.firstfield);
-// console.log(yargs.argv.secondfield);
-
-// const input = yargs(Movie(process)).argv;
+//set  yargs.argv as a variable.
+const input = yargs.argv;
+console.log(input);
 
 // if (input.actor) {
 //   console.log(`Its's ${input.actor}`);
 // }
-// clearInterval;
+
+function app(yargsObject) {
+  if (yargsObject.add) {
+    const newMovie = new Movie(
+      yargsObject.title,
+      yargsObject.actor,
+      yargsObject.director,
+      yargsObject.rating
+    );
+    newMovie.add();
+  } else if (yargsObject.addMany) {
+    for (let i = 0; i < yargsObject.title.length; i++) {
+      const newMovie = new Movie(
+        yargsObject.title[i],
+        yargsObject.actor[i],
+        yargsObject.director[i],
+        yargsObject.rating[i]
+      );
+
+      // run the add method only after the las itteration
+      i === yargsObject.title.length - 1
+        ? newMovie.add(true)
+        : newMovie.add(false);
+    }
+  } else {
+    console.log("Hello whoever you are");
+  }
+}
+
+app(input);
